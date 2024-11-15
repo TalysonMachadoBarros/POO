@@ -3,14 +3,11 @@ package src;
 public class Cardapio {
     private String nomePrato;
     private double precoPrato;
-    private String nomePratoVIP;
-    private double precoPratoVIP;
 
-    public Cardapio(String nomePrato, double precoPrato,String nomePratoVIP, double precoPratoVIP) {
+
+    public Cardapio(String nomePrato, double precoPrato) {
         this.nomePrato = nomePrato;
         this.precoPrato = precoPrato;
-        this.nomePratoVIP = nomePratoVIP;
-        this.precoPratoVIP = precoPratoVIP;
     }
 
     public String getNomePrato() {
@@ -19,14 +16,6 @@ public class Cardapio {
 
     public double getPrecoPrato() {
         return precoPrato;
-    }
-
-    public String getNomePratoVIP() {
-        return nomePratoVIP;
-    }
-
-    public double getPrecoPratoVIP() {
-        return precoPratoVIP;
     }
 
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    private static ArrayList<CardapioVip> cardapiosVip = new ArrayList<>();
     private static ArrayList<Cardapio> cardapios = new ArrayList<>();
     private static ArrayList<Evento> eventos = new ArrayList<>();
     private static ArrayList<Garcom> garcom = new ArrayList<>();
@@ -62,20 +63,30 @@ public class Main {
         System.out.println("Digite a quantidade de pratos VIP: ");
         int quantidadeMenuVIP = entrada.nextInt();
         entrada.nextLine();
-        System.out.println("Digite os pratos: ");
-        String nomePrato = entrada.nextLine();
-
-        System.out.println("Digite o valor dos pratos: ");
-        double precoPrato = entrada.nextDouble();
-        entrada.nextLine();
-        System.out.println("Digite os pratos VIP: ");
-        String nomeVip = entrada.nextLine();
-
-        System.out.println("Digite o valor dos pratos VIP: ");
-        double precoPratoVip = entrada.nextDouble();
-        entrada.nextLine();
         eventos.add(new Evento(tema,quantidadeMenu,quantidadeMenuVIP));
-        cardapios.add(new Cardapio(nomePrato,precoPrato,nomeVip,precoPratoVip));
+
+        for (int i = 0; i < quantidadeMenu; i++) {
+
+            System.out.println("Digite o prato " + (i+1) + ": ");
+            String nomePrato = entrada.nextLine();
+
+            System.out.println("Digite o valor do prato " + (i+1) + ": ");
+            double precoPrato = entrada.nextDouble();
+            entrada.nextLine();
+            cardapios.add(new Cardapio(nomePrato,precoPrato));
+        }
+
+        for (int i = 0; i < quantidadeMenuVIP; i++) {
+
+            System.out.println("Digite o prato VIP " + (i+1) + " : ");
+            String nomeVip = entrada.nextLine();
+
+            System.out.println("Digite o valor do prato VIP " + (i+1) + " : ");
+            double precoPratoVip = entrada.nextDouble();
+            entrada.nextLine();
+            cardapiosVip.add(new CardapioVip(nomeVip,precoPratoVip));
+        }
+
     }
 
     public static void listarEventos() {
@@ -89,14 +100,17 @@ public class Main {
                 System.out.println((i + 1) + "Tema: " + eventos.get(i).getTema());
                 System.out.println("Quantidade de pratos: " + eventos.get(i).getQuantidadeMenu());
                 System.out.println("Quantidade de pratos VIP: " + eventos.get(i).getQuantidadeMenuVip());
+
+                for ( i = 0; i < eventos.get(i).getQuantidadeMenu(); i++) {
                 System.out.println("Pratos: " + cardapios.get(i).getNomePrato());
                 System.out.println("Valor: " + cardapios.get(i).getPrecoPrato());
-                System.out.println("Pratos VIP: " + cardapios.get(i).getNomePratoVIP());
-                System.out.println("Valor VIP: " + cardapios.get(i).getPrecoPratoVIP());
+                }
+
+                for (i = 0; i < eventos.get(i).getQuantidadeMenuVip(); i++) {
+                    System.out.println("Pratos VIP: " + cardapiosVip.get(i).getNomePratoVIP());
+                    System.out.println("Valor VIP: " + cardapiosVip.get(i).getPrecoPratoVIP());
+                }
                 System.out.println("---------------------------------------");
-
-
-
 
             }
         }

@@ -5,8 +5,8 @@ public class Evento {
 
 
     private String tema;
-    private int quantidadeMenu;
-    private int quantidadeMenuVip;
+    public int quantidadeMenu;
+    public int quantidadeMenuVip;
 
 
     public Evento(String tema, int quantidadeMenu, int quantidadeMenuVip) {
