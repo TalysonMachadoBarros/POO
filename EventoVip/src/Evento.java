@@ -1,30 +1,32 @@
 package src;
 
 
+import java.util.ArrayList;
+
 public class Evento {
-
-
+    private ArrayList<Cardapio> cardapios;
+    private ArrayList<Cardapio> cardapiosVIP;
     private String tema;
-    public int quantidadeMenu;
-    public int quantidadeMenuVip;
 
 
-    public Evento(String tema, int quantidadeMenu, int quantidadeMenuVip) {
+
+
+    public Evento(String tema, ArrayList<Cardapio> cardapios, ArrayList<Cardapio> cardapiosVIP) {
         this.tema = tema;
-        this.quantidadeMenu = quantidadeMenu;
-        this.quantidadeMenuVip = quantidadeMenuVip;
+        this.cardapios = cardapios;
+        this.cardapiosVIP = cardapiosVIP;
     }
 
     public String getTema() {
         return tema;
     }
 
-    public int getQuantidadeMenu() {
-        return quantidadeMenu;
+    public ArrayList<Cardapio> getCardapios() {
+        return cardapios;
     }
 
-    public int getQuantidadeMenuVip() {
-        return quantidadeMenuVip;
+    public ArrayList<Cardapio> getCardapiosVIP() {
+        return cardapiosVIP;
     }
 
 }

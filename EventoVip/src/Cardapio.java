@@ -13,9 +13,15 @@ public class Cardapio {
     public String getNomePrato() {
         return nomePrato;
     }
+    public void setNomePrato(String nomePrato) {
+        this.nomePrato = nomePrato;
+    }
 
     public double getPrecoPrato() {
         return precoPrato;
+    }
+    public void setPrecoPrato(double precoPrato) {
+        this.precoPrato = precoPrato;
     }
 
 }
