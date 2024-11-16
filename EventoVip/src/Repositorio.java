@@ -3,7 +3,7 @@ package src;
 import java.util.ArrayList;
 
 public class Repositorio {
-    private ArrayList<Evento> eventos = new ArrayList<>();
+    public ArrayList<Evento> eventos = new ArrayList<>();
 
 
 
@@ -32,8 +32,8 @@ public class Repositorio {
                 }
                 System.out.println("-----");
 
-
             }
+
         }
 
 

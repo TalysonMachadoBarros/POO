@@ -23,7 +23,7 @@ public class Main {
             System.out.println("|------------------------------------------------|");
             System.out.println("|--             2- Listar Eventos              --|");
             System.out.println("|------------------------------------------------|");
-            System.out.println("|--              3- Editar Evento              --|");
+            System.out.println("|--             3- Excluir Evento              --|");
             System.out.println("|------------------------------------------------|");
             System.out.println("|--                 4- Sair                    --|");
             System.out.println("|________________________________________________|");
@@ -38,7 +38,7 @@ public class Main {
                     repositorio.listarEventos();
                     break;
                 case 3:
-
+                    excluirEvento();
                     break;
                 case 4:
                     System.out.println("Adeus!");
@@ -51,7 +51,53 @@ public class Main {
 
 
         }
+        ArrayList<Mesa> mesas = definirMesas();
+
+
+
+
     }
+
+    public static ArrayList<Mesa> definirMesas() {
+        ArrayList<Mesa> mesas = new ArrayList<>();
+        for (int i = 1;i <= 5; i++) {
+
+            System.out.println("Defina o número de cadeiras para a Mesa " + i + " (1 a 8): ");
+            int cadeiras = entrada.nextInt();
+            entrada.nextLine();
+
+            Mesa mesa = new Mesa(i,cadeiras);
+
+            System.out.println("Quantos convidados para a mesa " + i + "?");
+            int numConvidados = entrada.nextInt();
+            entrada.nextLine();
+
+            for (int j = 0; j < numConvidados; j++) {
+                System.out.println("Nome do convidado " + (j + 1) + ": ");
+                String nomeConvidado = entrada.nextLine();
+                System.out.println("O convidado é VIP? (true/false): )");
+                boolean isVIP = entrada.nextBoolean();
+                entrada.nextLine();
+
+                mesa.addConvidado(new Convidado(nomeConvidado, isVIP));
+            }
+
+            System.out.println("Deseja definir a decoração da Mesa " + i + "? (yes/no): ");
+            String resposta = entrada.nextLine();
+            if (resposta.equalsIgnoreCase("yes")) {
+                System.out.println("Digite a decoração: ");
+                String decoracaoMesa = entrada.nextLine();
+                mesa.setDecoracaoMesa(decoracaoMesa);
+            }
+
+            mesas.add(mesa);
+
+        }
+        return mesas;
+    }
+
+
+
 
     public static void criarEvento() {
         System.out.println("Digite o tema do evento: ");
@@ -99,6 +145,19 @@ public class Main {
 
     }
 
+    public static void excluirEvento() {
+        repositorio.listarEventos();
+        System.out.println(" Escolha o evento que deseja editar: (Ex: 1)");
+        int numeroEvento = entrada.nextInt();
+
+        if (numeroEvento > 0 && numeroEvento <=repositorio.eventos.size()) {
+            repositorio.eventos.remove(numeroEvento - 1);
+            System.out.println("Evento excluido com sucesso!");
+        } else {
+            System.out.println("Evento inválido");
+        }
+
+    }
 
 
     public static void cadastrar() {
