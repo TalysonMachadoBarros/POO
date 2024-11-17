@@ -8,9 +8,8 @@ import java.util.Scanner;
 
 public class Main {
     private static Repositorio repositorio = new Repositorio();
-
-
-    private static ArrayList<Garcom> garcom = new ArrayList<>();
+    private static ArrayList<Mesa> mesas = new ArrayList<>();
+    private static ArrayList<Garcom> garcons = new ArrayList<>();
     private static Scanner entrada = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -51,16 +50,73 @@ public class Main {
 
 
         }
-        ArrayList<Mesa> mesas = definirMesas();
-
+        ArrayList<Mesa> mesas = cadastrarMesa();
 
 
 
     }
 
-    public static ArrayList<Mesa> definirMesas() {
-        ArrayList<Mesa> mesas = new ArrayList<>();
-        for (int i = 1;i <= 5; i++) {
+    public static void cadastrarGarcom() {
+
+        System.out.print("Quantos garçons deseja cadastrar? ");
+        int numGarcons = entrada.nextInt();
+        entrada.nextLine();
+
+        for (int i = 0; i < numGarcons; i++) {
+            System.out.print("Nome do garçom " + (i + 1) + ": ");
+            String nomeGarcom = entrada.nextLine();
+            garcons.add(new Garcom(nomeGarcom));
+        }
+
+    }
+
+
+    public static void cadastrarConvidado() {
+
+        System.out.print("\nQuantos convidados deseja cadastrar? ");
+        int numConvidados = entrada.nextInt();
+        entrada.nextLine();
+
+        for (int i = 0; i < numConvidados; i++) {
+            System.out.print("Nome do convidado " + (i + 1) + ": ");
+            String nomeConvidado = entrada.nextLine();
+
+            System.out.print("O convidado é VIP? (S/N): ");
+            boolean isVip = entrada.nextLine().equalsIgnoreCase("S");
+
+            Convidado convidado = new Convidado(nomeConvidado, isVip);
+
+            // Associar o convidado a uma mesa
+            System.out.println("\nEscolha uma mesa para o convidado:");
+            for (Mesa mesa : mesas) {
+                System.out.println("Mesa " + mesa);
+            }
+
+            System.out.print("Digite o número da mesa: ");
+            int mesaEscolhida = entrada.nextInt();
+            entrada.nextLine();
+
+            if (mesaEscolhida >= 1 && mesaEscolhida <= mesas.size()) {
+                Mesa mesa = mesas.get(mesaEscolhida - 1);
+                if (mesa.adicionarConvidado(convidado)) {
+                    System.out.println("Não foi possível adicionar o convidado. Tente outra mesa.");
+                }
+            } else {
+                System.out.println("Número de mesa inválido!");
+            }
+        }
+
+    }
+
+
+    public static ArrayList<Mesa> cadastrarMesa() {
+
+
+        System.out.print("\nQuantas mesas deseja cadastrar? ");
+        int numMesas = entrada.nextInt();
+        entrada.nextLine();
+
+        for (int i = 1;i <= numMesas; i++) {
 
             System.out.println("Defina o número de cadeiras para a Mesa " + i + " (1 a 8): ");
             int cadeiras = entrada.nextInt();
@@ -68,23 +124,9 @@ public class Main {
 
             Mesa mesa = new Mesa(i,cadeiras);
 
-            System.out.println("Quantos convidados para a mesa " + i + "?");
-            int numConvidados = entrada.nextInt();
-            entrada.nextLine();
-
-            for (int j = 0; j < numConvidados; j++) {
-                System.out.println("Nome do convidado " + (j + 1) + ": ");
-                String nomeConvidado = entrada.nextLine();
-                System.out.println("O convidado é VIP? (true/false): )");
-                boolean isVIP = entrada.nextBoolean();
-                entrada.nextLine();
-
-                mesa.addConvidado(new Convidado(nomeConvidado, isVIP));
-            }
-
-            System.out.println("Deseja definir a decoração da Mesa " + i + "? (yes/no): ");
+            System.out.println("Deseja definir a decoração da Mesa " + i + "? (sim/no): ");
             String resposta = entrada.nextLine();
-            if (resposta.equalsIgnoreCase("yes")) {
+            if (resposta.equalsIgnoreCase("sim")) {
                 System.out.println("Digite a decoração: ");
                 String decoracaoMesa = entrada.nextLine();
                 mesa.setDecoracaoMesa(decoracaoMesa);
@@ -93,6 +135,25 @@ public class Main {
             mesas.add(mesa);
 
         }
+
+        //Associar garçons ás mesas
+        for (Mesa mesa : mesas) {
+            System.out.println("\nEscolha um garçom para a " + mesa);
+            for (int i = 0; i < garcons.size(); i++) {
+                System.out.println((i + 1) + ". " + garcons.get(i));
+            }
+
+            System.out.print("Digite o número do garçom: ");
+            int escolha = entrada.nextInt();
+            entrada.nextLine();
+
+            if (escolha >= 1 && escolha <= garcons.size()) {
+                mesa.atribuirGarcom(garcons.get(escolha - 1));
+            } else {
+                System.out.println("Escolha inválida!");
+            }
+        }
+
         return mesas;
     }
 
@@ -160,28 +221,28 @@ public class Main {
     }
 
 
-    public static void cadastrar() {
-        int opcaoMenuCad = 1;
+    //public static void cadastrar() {
+     //   int opcaoMenuCad = 1;
 
-        System.out.println("--------------------------------------------------");
-        System.out.println("|              Menu de Cadastro                  |");
-        System.out.println("|------------------------------------------------|");
-        System.out.println("|       1-Graçons     ||       2-Convidados      |");
-        System.out.println("|------------------------------------------------|");
-        System.out.println("|                  3-Mesas                       |");
-        System.out.println("--------------------------------------------------");
-        opcaoMenuCad = entrada.nextInt();
-        entrada.nextLine();
+      //  System.out.println("--------------------------------------------------");
+       // System.out.println("|              Menu de Cadastro                  |");
+       // System.out.println("|------------------------------------------------|");
+       // System.out.println("|       1-Graçons     ||       2-Convidados      |");
+       // System.out.println("|------------------------------------------------|");
+       // System.out.println("|                  3-Mesas                       |");
+       // System.out.println("--------------------------------------------------");
+       // opcaoMenuCad = entrada.nextInt();
+       // entrada.nextLine();
 
-        switch (opcaoMenuCad) {
-            case 1:
-                System.out.println("Digite o nome do garcom: ");
-                String nomeGarcom = entrada.nextLine();
-                garcom.add(new Garcom(nomeGarcom));
-                System.out.println("Garcom cadastrado com sucesso!");
-                break;
-        }
-    }
+       //switch (opcaoMenuCad) {
+       //     case 1:
+        //        System.out.println("Digite o nome do garcom: ");
+        //        String nomeGarcom = entrada.nextLine();
+         //       garcom.add(new Garcom(nomeGarcom));
+         //       System.out.println("Garcom cadastrado com sucesso!");
+          //      break;
+       // }
+   // }
 
 
 }

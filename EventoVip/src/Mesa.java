@@ -6,6 +6,7 @@ public class Mesa {
     private int id;
     private String decoracaoMesa = "padrão";
     private int cadeiras;
+    private Garcom garcom;
     private ArrayList<Convidado> convidados;
 
 
@@ -15,11 +16,13 @@ public class Mesa {
         this.convidados = new ArrayList<>();
     }
 
-    public void addConvidado(Convidado convidado) {
+    public boolean adicionarConvidado(Convidado convidado) {
         if (convidados.size() < cadeiras) {
             convidados.add(convidado);
+            return true;
         } else {
             System.out.println("A mesa " + id + " já está cheia!");
+            return false;
         }
     }
 
@@ -33,6 +36,17 @@ public class Mesa {
 
     }
 
+    public void atribuirGarcom(Garcom garcom) {
+        if (garcom.isDisponivel()) {
+            this.garcom = garcom;
+            garcom.setDisponivel(false); // Torna o garçom ocupado
+        } else {
+            System.out.println("O garçom " + garcom.getNome() + " não está disponível!");
+        }
+    }
+
+
+
     public void setDecoracaoMesa(String decoracaoMesa) {
         if (possuiVIP()) {
             this.decoracaoMesa = decoracaoMesa;
@@ -43,7 +57,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa " + id + " (Cadeiras: " + cadeiras + ", Decoração: " + decoracaoMesa + ", Convidados: " + convidados + ")";
+        return "Mesa " + id + " (Cadeiras: " + cadeiras + ", Garçom: " + (garcom != null ? garcom.getNome() : "Nenhum") + ", Convidados: " + convidados + ")";
     }
 
 
